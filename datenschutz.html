@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<title>Datenschutz – Ruhige Orte</title>
+<style>
+:root{--bg1:#EDF4FB;--bg2:#D9E9F7;--card:#ffffffF2;--cardB:#B8D4EA;--primary:#6BA3D0;--accent:#4A8BBF;--text:#1A365D;--text2:#2D4A6B;--muted:#8AA6C1;--shadow:0 4px 6px rgba(26,54,93,.07),0 20px 50px rgba(26,54,93,.12)}
+html.dark{--bg1:#0B1A2E;--bg2:#132A4A;--card:#1B3150E6;--cardB:rgba(107,163,208,.18);--text:#EAF4FF;--text2:#A9C5E0;--muted:#7AA0C5;--shadow:0 10px 40px rgba(0,0,0,.5)}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--text);min-height:100dvh;padding:10px 16px 60px;padding-top:calc(10px + env(safe-area-inset-top))}
+.wrap{max-width:440px;margin:0 auto}
+a.back,a{color:var(--accent);text-decoration:none;font-weight:700}
+a.back{display:inline-block;margin:14px 0;font-size:14px}
+.card{background:var(--card);backdrop-filter:blur(20px);border:1px solid var(--cardB);border-radius:28px;padding:20px;margin:12px 0;box-shadow:var(--shadow);line-height:1.55}
+h1{font-size:24px;margin:0 0 10px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:15px;margin:18px 0 6px;color:var(--text2)}
+.small{font-size:12px;color:var(--muted)}
+p,li{margin:6px 0}
+ul{padding-left:20px}
+code{background:rgba(107,163,208,.15);padding:1px 5px;border-radius:6px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">← Zurück zu Ruhige Orte</a>
+<div class="card">
+<h1>Datenschutz</h1>
+
+<h2>1. Keine Cookies, kein Tracking</h2>
+<p>Diese App setzt keine Cookies. Es werden keine Tracking-Tools wie Google Analytics, Matomo oder ähnliche verwendet. Es gibt kein Backend und keinen Server, der Zugriffe loggt (außer GitHub Pages selbst – siehe Punkt 4).</p>
+
+<h2>2. Standort & lokale Speicherung</h2>
+<p>Die Standortfunktion nutzt die Browser-Schnittstelle <code>navigator.geolocation</code>. Der Standort wird ausschließlich lokal im Browser verarbeitet, um die Entfernung zu ruhigen Orten zu berechnen. Er wird niemals an einen Server gesendet oder gespeichert.</p>
+<p>Folgende Daten werden lokal im Browser gespeichert (<code>localStorage</code>):</p>
+<ul>
+<li><code>ruhige-orte-favs</code> – Favoriten</li>
+<li><code>ruhige-orte-notes</code> – persönliche Notizen</li>
+<li><code>ruhige-orte-checks</code> – Ruhe-Checks</li>
+<li><code>ruhige-orte-photos</code> – eigene Fotos zu Orten (nur auf diesem Gerät, verkleinert)</li>
+<li><code>ruhige-orte-custom</code> – übernommene OSM-Orte</li>
+<li><code>ruhige-orte-theme</code> – Hell/Dunkel-Einstellung</li>
+</ul>
+<p>Alle Daten bleiben ausschließlich auf deinem Gerät und lassen sich im Browser unter „Website-Daten“ jederzeit löschen.</p>
+
+<h2>3. Karten & Suche</h2>
+<p><b>Karten:</b> Die App nutzt Leaflet mit Kartenkacheln von CARTO auf Basis von OpenStreetMap-Daten. Beim Laden der Karte werden Kacheln von <code>basemaps.cartocdn.com</code> geladen, dabei wird die IP-Adresse technisch bedingt an CARTO übertragen. Es gelten die <a href="https://carto.com/privacy/" target="_blank" rel="noopener">Datenschutzbestimmungen von CARTO</a>.</p>
+<p><b>Bibliothek:</b> Die Kartendarstellung nutzt die JavaScript-Bibliothek Leaflet, ausgeliefert über <code>unpkg.com</code> (CDN). Dabei wird die IP-Adresse technisch bedingt an unpkg.com übertragen.</p>
+<p><b>Ortssuche (optional):</b> Nur wenn du aktiv auf „Suchen“ klickst und den Hinweis bestätigst, wird der eingegebene Ort an Nominatim (<code>nominatim.openstreetmap.org</code>) gesendet. Es gelten die <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank" rel="noopener">Nutzungsbedingungen von Nominatim</a>.</p>
+<p><b>Live-Suche (optional):</b> Nur wenn du aktiv auf „Live: Orte, Cafés & Eis hier finden“ klickst und den Hinweis bestätigst, wird der aktuelle Kartenausschnitt an einen von mehreren öffentlichen Overpass-Servern gesendet (der Reihe nach versucht: <code>overpass-api.de</code>, <code>overpass.kumi.systems</code>, <code>overpass.private.coffee</code> – alle OSM-Community-Dienste, falls einer nicht erreichbar ist). Es gelten die <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener">Nutzungsbedingungen der Overpass API</a>.</p>
+<p><b>Wetter (optional):</b> Nur wenn du bei einem Ort aktiv auf „Wetter hier abrufen“ klickst und den Hinweis bestätigst, werden die Koordinaten dieses Ortes an Open-Meteo (<code>api.open-meteo.com</code>) gesendet, um die aktuelle Temperatur, Windgeschwindigkeit und den Niederschlag abzurufen. Open-Meteo ist ein kostenloser Wetterdienst ohne Login und ohne Tracking. Es gelten die <a href="https://open-meteo.com/en/terms" target="_blank" rel="noopener">Nutzungsbedingungen von Open-Meteo</a>.</p>
+
+<h2>4. GitHub Pages</h2>
+<p>Diese Seite wird über GitHub Pages gehostet. GitHub kann technisch bedingt IP-Adressen und Zugriffszeiten protokollieren. Siehe die <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener">GitHub-Datenschutzerklärung</a>.</p>
+
+<h2>5. Deine Rechte</h2>
+<p>Du hast das Recht auf Auskunft und Löschung deiner lokal gespeicherten Daten (einfach im Browser löschen) sowie das Recht zur Beschwerde bei einer Datenschutz-Aufsichtsbehörde.</p>
+
+<p class="small">Stand: Juli 2026</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="theme-color" content="#6BA3D0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ruhige Orte">
+<title>Ruhige Orte - Start</title>
+<style>
+:root{--bg1:#E1EBF6;--bg2:#CCDFEF;--card:#ffffffF2;--cardB:#AECBE3;--primary:#6BA3D0;--accent:#4A8BBF;--text:#1A365D;--text2:#2D4A6B;--muted:#8AA6C1;--shadow:0 4px 6px rgba(26,54,93,.07),0 20px 50px rgba(26,54,93,.12),0 40px 80px rgba(74,139,191,.10)}
+html.dark{--bg1:#152741;--bg2:#1E3A60;--card:#28466FE6;--cardB:rgba(130,180,220,.28);--text:#EAF4FF;--text2:#B8D3EA;--muted:#93B6D8;--shadow:0 10px 40px rgba(0,0,0,.45),0 4px 12px rgba(0,0,0,.35)}
+*{box-sizing:border-box;transition:background-color .35s,color .35s,border-color .35s,box-shadow .35s}
+body{touch-action:manipulation;margin:0;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;font-size:16.5px;font-weight:500;line-height:1.48;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--text);min-height:100dvh;overflow-x:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+.orbwrap{position:fixed;inset:0;overflow:hidden;z-index:-1;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.32;animation:float 14s infinite ease-in-out}
+.orb1{width:340px;height:340px;background:radial-gradient(circle,#7FB3D5,#A9CCE3);top:-90px;left:-80px}
+.orb2{width:420px;height:420px;background:radial-gradient(circle,#8FC1E8,#C5DFF0);top:28%;right:-130px;animation-delay:-4s}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,#B8D4EA,#E1F0FA);bottom:12%;left:8%;animation-delay:-8s}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-22px) scale(1.06)}}
+@media (prefers-reduced-motion: reduce){.orb{animation:none}*{transition:none!important}}
+html,body{max-width:100%}
+.wrap{max-width:440px;margin:0 auto;padding:10px 16px 40px}
+header{display:flex;justify-content:flex-end;padding:14px 4px}
+.theme{border:1.5px solid var(--cardB);background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0) 65%),var(--card);backdrop-filter:blur(20px);border-radius:999px;padding:9px 16px;box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 3px 0 rgba(26,54,93,.10),0 6px 14px rgba(26,54,93,.14);cursor:pointer;font-size:14px;font-weight:700;color:var(--text)}
+.theme:active{transform:translateY(2px) scale(.98);box-shadow:0 1px 4px rgba(26,54,93,.18) inset}
+.hero{text-align:center;padding:12px 8px 26px}
+.hero img{width:76px;height:76px;border-radius:22px;box-shadow:var(--shadow)}
+.hero h1{font-size:30px;margin:16px 0 6px;font-weight:800;letter-spacing:-.02em}
+.hero p{margin:0;color:var(--text2);font-size:16px;line-height:1.55;padding:0 6px}
+.btn{display:block;text-align:center;text-decoration:none;background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0) 50%),linear-gradient(135deg,var(--accent),var(--primary));color:#fff;border:none;border-radius:999px;padding:16px 18px;font-weight:800;letter-spacing:.01em;cursor:pointer;box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 5px 0 rgba(26,54,93,.22),0 10px 24px rgba(74,139,191,.45);font-size:17px;margin:18px 0 22px}
+.btn:active{transform:translateY(3px) scale(.99);box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 2px 0 rgba(26,54,93,.22),0 4px 10px rgba(74,139,191,.35)}
+.label{display:block;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text2);margin:0 4px 8px}
+.navcard{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 55%),var(--card);backdrop-filter:blur(20px);border:1.5px solid var(--cardB);border-radius:20px;padding:14px 16px;box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 3px 0 rgba(26,54,93,.08),0 6px 14px rgba(26,54,93,.12);margin-bottom:10px}
+.navcard:active{transform:translateY(2px) scale(.98);box-shadow:0 1px 4px rgba(26,54,93,.15) inset}
+.navicon{font-size:24px;width:38px;text-align:center;flex-shrink:0}
+.navtext b{display:block;font-size:16.5px}
+.navtext span{font-size:14px;color:var(--muted);font-weight:500}
+.navarrow{margin-left:auto;font-size:20px;color:var(--muted);flex-shrink:0}
+.foot{text-align:center;font-size:13px;color:var(--muted);margin-top:26px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="orbwrap"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+<div class="wrap">
+<header><button class="theme" id="themeBtn">🌙 Dunkel</button></header>
+
+<div class="hero">
+<img src="icon-192.png" alt="Ruhige Orte Icon">
+<h1>Ruhige Orte</h1>
+<p>Deutschlandweit stille Plätze finden – zum Durchatmen, Lesen oder einfach mal fünf Minuten für dich. Kostenlos, ohne Werbung, ohne Tracking.</p>
+</div>
+
+<a class="btn" href="app.html">🧭 App öffnen</a>
+
+<div class="label">Mehr</div>
+<a class="navcard" href="anleitung.html">
+ <div class="navicon">📖</div>
+ <div class="navtext"><b>Anleitung</b><span>So funktioniert die App</span></div>
+ <div class="navarrow">›</div>
+</a>
+<a class="navcard" href="impressum.html">
+ <div class="navicon">📄</div>
+ <div class="navtext"><b>Impressum</b><span>Anbieterkennzeichnung</span></div>
+ <div class="navarrow">›</div>
+</a>
+<a class="navcard" href="datenschutz.html">
+ <div class="navicon">🔒</div>
+ <div class="navtext"><b>Datenschutz</b><span>Welche Daten wo bleiben</span></div>
+ <div class="navarrow">›</div>
+</a>
+
+<div class="foot">Läuft offline · Keine Cookies · Kein Backend<br>Karten © OpenStreetMap-Mitwirkende</div>
+</div>
+<script>
+const themeBtn=document.getElementById('themeBtn');
+function applyTheme(t){document.documentElement.classList.toggle('dark',t==='dark');themeBtn.textContent=t==='dark'?'☀️ Hell':'🌙 Dunkel';localStorage.setItem('ruhige-orte-theme',t);}
+let saved=localStorage.getItem('ruhige-orte-theme'); if(!saved) saved=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'; applyTheme(saved);
+themeBtn.onclick=()=>{const cur=document.documentElement.classList.contains('dark')?'dark':'light'; applyTheme(cur==='dark'?'light':'dark');};
+if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
+</script>
+</body>
+</html>

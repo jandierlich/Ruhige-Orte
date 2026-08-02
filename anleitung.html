@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<title>Anleitung – Ruhige Orte</title>
+<style>
+:root{--bg1:#E1EBF6;--bg2:#CCDFEF;--card:#ffffffF2;--cardB:#AECBE3;--primary:#6BA3D0;--accent:#4A8BBF;--text:#1A365D;--text2:#2D4A6B;--muted:#8AA6C1;--shadow:0 4px 6px rgba(26,54,93,.07),0 20px 50px rgba(26,54,93,.12)}
+html.dark{--bg1:#152741;--bg2:#1E3A60;--card:#28466FE6;--cardB:rgba(130,180,220,.28);--text:#EAF4FF;--text2:#B8D3EA;--muted:#93B6D8;--shadow:0 10px 40px rgba(0,0,0,.45)}
+*{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
+body{touch-action:manipulation;margin:0;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;font-size:16.5px;font-weight:500;line-height:1.55;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--text);min-height:100dvh;padding:10px 16px 50px;padding-top:calc(10px + env(safe-area-inset-top))}
+.wrap{max-width:440px;margin:0 auto}
+a.back{display:inline-block;margin:14px 0;color:var(--accent);text-decoration:none;font-weight:700;font-size:15px}
+h1{font-size:28px;margin:0 0 14px;font-weight:800;letter-spacing:-.02em}
+.card{background:var(--card);backdrop-filter:blur(20px);border:1px solid var(--cardB);border-radius:24px;padding:18px;margin:12px 0;box-shadow:var(--shadow)}
+.card h2{font-size:17.5px;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.card p,.card li{font-size:15px;color:var(--text2);margin:4px 0;line-height:1.5}
+.card ul{padding-left:20px;margin:6px 0}
+.small{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">← Zurück zum Start</a>
+<h1>Anleitung</h1>
+
+<div class="card">
+<h2>🧭 Orte finden</h2>
+<p><b>Standort:</b> Tippe auf „Mein Standort", damit die App deine Entfernung zu jedem Ort berechnen kann. Alternativ einen Ort über „Suchen" eingeben.</p>
+<p><b>Radius:</b> Mit dem Schieberegler bestimmst du, wie weit die Umgebungssuche reicht (1–20 km).</p>
+</div>
+
+<div class="card">
+<h2>🔍 Live-Suche (OSM)</h2>
+<p>Über „Live: Orte, Cafés & Eis hier finden" kannst du zusätzlich zur festen Orte-Liste live nach Bänken, Parks, Cafés und Eisdielen im aktuellen Kartenausschnitt suchen. Das sendet den Kartenausschnitt an die Overpass API (OpenStreetMap) – deshalb der Bestätigungshinweis vorher.</p>
+</div>
+
+<div class="card">
+<h2>🎯 Filtern</h2>
+<p><b>Stimmung:</b> Lesen, Durchatmen, Mit Kind, Mit Hund, Picknick – alle starten aktiv (dunkel), tippe einen weg, um ihn auszuschließen.</p>
+<p><b>Komfort:</b> Stufenlos, <300m Fußweg, Parkplatz vorhanden, Schattig, Digital Detox (kaum Handyempfang) – auch hier starten alle aktiv, Ergebnisliste passt sich sofort an.</p>
+<p><b>✨ JETZT ruhig:</b> Sortiert danach, was zur aktuellen Uhrzeit/Wochentag besonders passt.</p>
+<p><b>🎲 Überrasch mich:</b> Wählt zufällig einen Ort aus deiner aktuellen Filterauswahl.</p>
+</div>
+
+<div class="card">
+<h2>📍 Ein Ort im Detail</h2>
+<ul>
+<li>Geschichte, Regeln und ruhige Anreise zu jedem Ort</li>
+<li>🌅 Goldene Stunde: automatisch berechnete beste Foto-/Genusszeit für heute</li>
+<li>🌦️ Wetter live abrufbar (Open-Meteo, nur nach Klick)</li>
+<li>📝 Eigene Notiz und 📷 eigenes Foto – bleiben nur auf deinem Gerät</li>
+<li>🔇 Ruhe-Check: bewerte 1–5, wie ruhig es gerade war</li>
+<li>📍 Auf Karte zeigen: zentriert die Karte auf diesen Ort und öffnet die Markierung</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>❤️ Favoriten & Sichern</h2>
+<p>Mit dem Herz-Symbol speicherst du einen Ort als Favorit. Tippe auf „❤️ Meine Orte" in den Filtern, um nur deine Favoriten zu sehen – die werden dann immer alle angezeigt, unabhängig von Radius oder anderen Filtern. Bei Orten aus der Live-Suche gibt es zusätzlich „⭐ Merken", um sie dauerhaft lokal zu speichern (unabhängig vom Teilen-Button).</p>
+<p>Über „⬇️ Backup exportieren" sicherst du Favoriten, Notizen, Fotos und Checks als Datei – z.B. vor einem Gerätewechsel. Mit „⬆️ Backup importieren" spielst du sie zurück ein.</p>
+<p>„🖨️ Meine Orte drucken" erstellt eine druckbare Liste deiner Favoriten.</p>
+</div>
+
+<div class="card">
+<h2>📡 Offline & Teilen</h2>
+<p>Einmal geöffnet, funktioniert die App auch ohne Internetverbindung (außer Live-Suche, Wetter und neue Kartenausschnitte). Über „🔗 Teilen" bei einem Ort kopierst du einen Link, der direkt zu diesem Ort springt.</p>
+</div>
+
+<div class="card">
+<p class="small">Mehr zu Daten & Rechtlichem: <a href="datenschutz.html" style="color:var(--accent)">Datenschutz</a> · <a href="impressum.html" style="color:var(--accent)">Impressum</a></p>
+</div>
+</div>
+</body>
+</html>
