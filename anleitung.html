@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<meta name="theme-color" content="#6BA3D0">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Anleitung – Ruhige Orte</title>
 <style>
 :root{--bg1:#E1EBF6;--bg2:#CCDFEF;--card:#ffffffF2;--cardB:#AECBE3;--primary:#6BA3D0;--accent:#4A8BBF;--text:#1A365D;--text2:#2D4A6B;--muted:#8AA6C1;--shadow:0 4px 6px rgba(26,54,93,.07),0 20px 50px rgba(26,54,93,.12)}
@@ -20,9 +22,11 @@ h1{font-size:28px;margin:0 0 14px;font-weight:800;letter-spacing:-.02em}
 .card p,.card li{font-size:15px;color:var(--text2);margin:4px 0;line-height:1.5}
 .card ul{padding-left:20px;margin:6px 0}
 .small{font-size:13px;color:var(--muted)}
+#statusbarCover{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top);background:var(--bg1);z-index:9000;pointer-events:none}
 </style>
 </head>
 <body>
+<div id="statusbarCover"></div>
 <div class="wrap">
 <a class="back" href="index.html">← Zurück zum Start</a>
 <h1>Anleitung</h1>

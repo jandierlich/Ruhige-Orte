@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
 <title>Datenschutz – Ruhige Orte</title>
+<meta name="theme-color" content="#6BA3D0">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
 :root{--bg1:#EDF4FB;--bg2:#D9E9F7;--card:#ffffffF2;--cardB:#B8D4EA;--primary:#6BA3D0;--accent:#4A8BBF;--text:#1A365D;--text2:#2D4A6B;--muted:#8AA6C1;--shadow:0 4px 6px rgba(26,54,93,.07),0 20px 50px rgba(26,54,93,.12)}
 html.dark{--bg1:#0B1A2E;--bg2:#132A4A;--card:#1B3150E6;--cardB:rgba(107,163,208,.18);--text:#EAF4FF;--text2:#A9C5E0;--muted:#7AA0C5;--shadow:0 10px 40px rgba(0,0,0,.5)}
@@ -20,9 +22,11 @@ h2{font-size:15px;margin:18px 0 6px;color:var(--text2)}
 p,li{margin:6px 0}
 ul{padding-left:20px}
 code{background:rgba(107,163,208,.15);padding:1px 5px;border-radius:6px;font-size:12px}
+#statusbarCover{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top);background:var(--bg1);z-index:9000;pointer-events:none}
 </style>
 </head>
 <body>
+<div id="statusbarCover"></div>
 <div class="wrap">
 <a class="back" href="index.html">← Zurück zu Ruhige Orte</a>
 <div class="card">

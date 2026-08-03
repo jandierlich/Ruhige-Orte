@@ -151,6 +151,10 @@ In Deutschland gilt TMG §5 auch für private GitHub Pages, wenn öffentlich err
 
 Stand: 27.07.2026, letzte Prüfung Nachtrag 13
 
+## Nachtrag 16 (Claude, 03.08.2026) – Icon randlos & etwas heller
+
+Auf Jans Wunsch das App-/Homescreen-Icon (icon-32/180/192/512.png) überarbeitet: Bisher lag die eigentliche Grafik (Motiv mit eigenen abgerundeten Ecken) mit deutlichem transparentem Rand mittig auf der 512×512-Fläche – dadurch erschien beim automatischen iOS-Zuschnitt ein sichtbarer "Rahmen" um ein kleineres, eigenständig abgerundetes Icon. Behoben durch: zentrierten, komplett deckenden Bildausschnitt (ohne die eingebauten abgerundeten Ecken und ohne Transparenz-Rand) auf volle Kantenlänge hochskaliert, sodass das Motiv randlos bis zum Rand reicht – iOS rundet die Ecken jetzt selbst sauber ab. Zusätzlich Helligkeit um ca. 14% erhöht. Alle vier Icon-Größen aus einem gemeinsamen Master neu erzeugt, `manifest.json` unverändert (kein `maskable`-Purpose gesetzt, daher unproblematisch für randlose Icons).
+
 ## Nachtrag 15 (Claude, 02.08.2026) – Funktions- und Optik-Feinschliff
 
 Auf Jans Wunsch die zuvor vorgeschlagenen Politur-Punkte umgesetzt:

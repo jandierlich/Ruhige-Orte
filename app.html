@@ -56,9 +56,11 @@ input[type=text],textarea{width:100%;border-radius:16px;border:1.5px solid var(-
 #mapFsOverlay.show{display:block}
 #mapFsOverlay .mapFsBtn{position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:999999;width:46px;height:46px;padding:0;justify-content:center;border-radius:50%;font-size:20px;font-weight:800;box-shadow:0 4px 18px rgba(0,0,0,.35);border-width:2px;background:var(--card)}
 @media print{.orb,header,.card{display:none!important}}
+#statusbarCover{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top);background:var(--bg1);z-index:9000;pointer-events:none}
 </style>
 </head>
 <body>
+<div id="statusbarCover"></div>
 <div class="orbwrap"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
 <div class="wrap">
 <header><div><h1>Ruhige Orte<small>Deutschlandweit stille Plätze finden</small></h1></div><button class="theme" id="themeBtn" aria-label="Hell/Dunkel-Modus umschalten">🌙 Dunkel</button></header>
