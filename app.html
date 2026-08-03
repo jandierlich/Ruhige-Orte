@@ -61,22 +61,22 @@ input[type=text],textarea{width:100%;border-radius:16px;border:1.5px solid var(-
 <body>
 <div class="orbwrap"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
 <div class="wrap">
-<header><div><h1>Ruhige Orte<small>Deutschlandweit stille Plätze finden</small></h1></div><button class="theme" id="themeBtn">🌙 Dunkel</button></header>
+<header><div><h1>Ruhige Orte<small>Deutschlandweit stille Plätze finden</small></h1></div><button class="theme" id="themeBtn" aria-label="Hell/Dunkel-Modus umschalten">🌙 Dunkel</button></header>
 
 <div style="display:flex;gap:6px;margin-bottom:2px">
 <a href="index.html" class="pill">🏠 Start</a>
 <a href="anleitung.html" class="pill">📖 Anleitung</a>
 </div>
 
-<div style="position:relative" id="mapWrap"><div id="map"></div><button class="pill mapFsBtn" id="fullscreenBtn">⛶ Vollbild</button></div>
+<div style="position:relative" id="mapWrap"><div id="map"></div><button class="pill mapFsBtn" id="fullscreenBtn" aria-label="Karte im Vollbild anzeigen">⛶ Vollbild</button></div>
 
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
-<button class="pill" id="toggleStandort">📍 Standort &amp; Suche ▾</button>
-<button class="pill" id="toggleFilter">🎯 Filter &amp; Aktionen ▾</button>
+<button class="pill" id="toggleStandort" aria-label="Standort und Suche ein-/ausklappen">📍 Standort &amp; Suche ▾</button>
+<button class="pill" id="toggleFilter" aria-label="Filter und Aktionen ein-/ausklappen">🎯 Filter &amp; Aktionen ▾</button>
 </div>
 
 <div class="details" id="secStandort"><div class="card" style="margin-top:8px">
-<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="locBtn" style="flex:1">📍 Mein Standort</button></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="locBtn" style="flex:1" aria-label="Meinen aktuellen Standort verwenden">📍 Mein Standort</button></div>
 <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><input type="text" id="searchInput" placeholder="Ort eingeben, z.B. Tangstedt, Hamburg" style="flex:1 1 180px;width:auto;min-width:0"><button class="pill" id="searchBtn">Suchen</button></div>
 <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap">
 <button class="btn" id="overpassBtn" style="background:#2D6A4F; flex:1; font-size:14px">🔍 Live: Orte, Cafés & Eis hier finden (OSM)</button>
@@ -103,6 +103,7 @@ input[type=text],textarea{width:100%;border-radius:16px;border:1.5px solid var(-
 <button class="pill" id="importBtn">⬆️ Backup importieren</button>
 <input type="file" id="importFile" accept="application/json" style="display:none">
 <button class="pill" id="printBtn">🖨️ Meine Orte drucken</button>
+<button class="pill" id="shareFavBtn">🔗 Alle Favoriten teilen</button>
 </div>
 </div></div>
 
@@ -128,6 +129,11 @@ let userMarker=null,circle=null,markers=[];
 function hav(a,b,c,d){const R=6371, dLa=(c-a)*Math.PI/180, dLo=(d-b)*Math.PI/180, e=Math.sin(dLa/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dLo/2)**2; return R*2*Math.atan2(Math.sqrt(e),Math.sqrt(1-e));}
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}}; const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 let favs=load('ruhige-orte-favs',[]),notes=load('ruhige-orte-notes',{}),checks=load('ruhige-orte-checks',{}),photos=load('ruhige-orte-photos',{});
+const MAX_PHOTOS=3;
+// Migration: frühere Version speicherte 1 Foto als String statt Array
+let photosMigrated=false;
+Object.keys(photos).forEach(k=>{ if(typeof photos[k]==='string'){ photos[k]=[photos[k]]; photosMigrated=true; } });
+if(photosMigrated) save('ruhige-orte-photos',photos);
 function updateMap(){
  if(userLat){
   if(!userMarker) userMarker=L.circleMarker([userLat,userLon],{radius:9,color:'#fff',fillColor:'#4A8BBF',fillOpacity:1,weight:3}).addTo(map);
@@ -191,6 +197,8 @@ window.loadWeather=async(id,lat,lon)=>{
 
 window.savePhoto=(id,input)=>{
  const file=input.files[0]; if(!file) return;
+ if(!photos[id]) photos[id]=[];
+ if(photos[id].length>=MAX_PHOTOS){ alert('Maximal '+MAX_PHOTOS+' Fotos pro Ort.'); input.value=''; return; }
  const img=new Image();
  const reader=new FileReader();
  reader.onload=()=>{
@@ -201,7 +209,7 @@ window.savePhoto=(id,input)=>{
    canvas.width=img.width*scale; canvas.height=img.height*scale;
    canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
    const dataUrl=canvas.toDataURL('image/jpeg',0.75);
-   photos[id]=dataUrl; save('ruhige-orte-photos',photos);
+   photos[id].push(dataUrl); save('ruhige-orte-photos',photos);
    renderList();
    setTimeout(()=>{const d=document.getElementById('det-'+id); if(d) d.classList.add('open'); document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'center'});},50);
   };
@@ -209,7 +217,7 @@ window.savePhoto=(id,input)=>{
  };
  reader.readAsDataURL(file);
 };
-window.removePhoto=id=>{ delete photos[id]; save('ruhige-orte-photos',photos); renderList(); setTimeout(()=>{const d=document.getElementById('det-'+id); if(d) d.classList.add('open');},50); };
+window.removePhoto=(id,i)=>{ if(photos[id]){ photos[id].splice(i,1); if(!photos[id].length) delete photos[id]; } save('ruhige-orte-photos',photos); renderList(); setTimeout(()=>{const d=document.getElementById('det-'+id); if(d) d.classList.add('open');},50); };
 
 async function fetchOverpass(){
   const bounds = map.getBounds();
@@ -277,7 +285,7 @@ function renderList(){
  let filtered=getFiltered();
  document.getElementById('resultCount').textContent=filtered.length+' Orte • '+ (userLat? 'im Radius':'deutschlandweit erweiterbar');
  document.getElementById('favCount').textContent=favs.length;
- if(!filtered.length){list.innerHTML='<div class="card small">Kein ruhiger Ort im Radius – vergrößere den Radius oder nutze Reset.</div>'; return;}
+ if(!filtered.length){list.innerHTML='<div class="card small" style="text-align:center;padding:30px 16px"><div style="font-size:38px;margin-bottom:8px">🧭</div>Kein ruhiger Ort im Radius – vergrößere den Radius oder nutze Reset.</div>'; return;}
  filtered.forEach(p=>{
   const isFav=favs.includes(p.id);
   const nowBadge=(()=>{
@@ -289,7 +297,7 @@ function renderList(){
   d.innerHTML=`
    <div style="display:flex;justify-content:space-between;align-items:start">
     <div><b>${esc(p.name)}</b> ${nowBadge} <span class="small">${p.dist? p.dist.toFixed(1)+' km':''}</span><br><span class="small">${esc(p.why)}</span></div>
-    <span class="fav" data-fav="${p.id}">${isFav?'❤️':'🤍'}</span>
+    <span class="fav" data-fav="${p.id}" role="button" aria-label="${isFav?'Favorit entfernen':'Als Favorit speichern'}">${isFav?'❤️':'🤍'}</span>
    </div>
    <div style="margin-top:8px">${p.tags.filter(t=>t!=='Bank mit Lehne').map(t=>`<span class="pill" style="font-size:12.5px;padding:6px 11px">${esc(t)}</span>`).join('')}</div>
    <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="small">Beste Zeit:</span>
@@ -305,10 +313,9 @@ function renderList(){
      <button class="pill" onclick="loadWeather('${p.id}',${p.lat},${p.lon})">🌦️ Wetter hier abrufen</button>
      <div class="small" id="wx-${p.id}" style="margin-top:6px"></div><br>
      <b>📝 Meine Notiz (nur lokal):</b><br><textarea id="note-${p.id}" rows="2" placeholder="z.B. Linke Bank besser, mehr Schatten...">${esc(notes[p.id]||'')}</textarea><br>
-     <div style="margin:6px 0" id="photo-${p.id}">${photos[p.id]?`<img src="${photos[p.id]}" style="max-width:100%;border-radius:14px;display:block;margin-bottom:6px">`:''}</div>
+     <div style="margin:6px 0;display:flex;gap:6px;flex-wrap:wrap" id="photo-${p.id}">${(photos[p.id]||[]).map((ph,i)=>`<div style="position:relative"><img src="${ph}" style="width:84px;height:84px;object-fit:cover;border-radius:14px;display:block"><span onclick="removePhoto('${p.id}',${i})" role="button" aria-label="Foto löschen" style="position:absolute;top:-6px;right:-6px;background:#fff;color:#1A365D;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3);cursor:pointer;font-size:12px">🗑️</span></div>`).join('')}</div>
      <input type="file" accept="image/*" id="photoInput-${p.id}" style="display:none" onchange="savePhoto('${p.id}',this)">
-     <button class="pill" onclick="document.getElementById('photoInput-${p.id}').click()">📷 Foto ${photos[p.id]?'ersetzen':'hinzufügen'}</button>
-     ${photos[p.id]?`<button class="pill" onclick="removePhoto('${p.id}')">🗑️ Foto entfernen</button>`:''}
+     ${(photos[p.id]||[]).length<MAX_PHOTOS?`<button class="pill" onclick="document.getElementById('photoInput-${p.id}').click()" aria-label="Foto hinzufügen">📷 Foto hinzufügen (${(photos[p.id]||[]).length}/${MAX_PHOTOS})</button>`:`<span class="small">Max. ${MAX_PHOTOS} Fotos erreicht</span>`}
      <br><button class="pill" onclick="saveNote('${p.id}')" style="margin-top:6px">Speichern</button><br><br>
      <b>🔇 Wie ruhig war es gerade?</b><br>
      <input type="range" min="1" max="5" value="${(checks[p.id]?.slice(-1)[0]?.v||3)}" id="check-${p.id}" class="slider" style="margin:6px 0"><div class="small">1 = laut, 5 = sehr ruhig</div>
@@ -366,13 +373,21 @@ moodList.forEach(m=>{const b=document.createElement('button'); b.className='pill
 const accessDiv=document.getElementById('accessFilters');
 accessList.forEach(([k,l])=>{const b=document.createElement('button'); b.className='pill active'; b.textContent=l; b.onclick=()=>{if(activeAccess.includes(k)) activeAccess=activeAccess.filter(x=>x!==k); else activeAccess.push(k); b.classList.toggle('active'); renderList(); renderMarkers();}; accessDiv.appendChild(b);});
 
-document.getElementById('radius').oninput=e=>{radius=+e.target.value; document.getElementById('radVal').textContent=radius+' km'; updateMap();};
-document.getElementById('locBtn').onclick=()=>navigator.geolocation.getCurrentPosition(pos=>{userLat=pos.coords.latitude; userLon=pos.coords.longitude; map.setView([userLat,userLon],13); updateMap();},err=>alert('GPS: '+err.message));
-document.getElementById('searchBtn').onclick=async()=>{
+document.getElementById('radius').oninput=e=>{radius=+e.target.value; document.getElementById('radVal').textContent=radius+' km'; updateMap(); if(userLat && circle) map.fitBounds(circle.getBounds(),{padding:[24,24]});};
+document.getElementById('locBtn').onclick=e=>{
+ const btn=e.currentTarget; const orig=btn.textContent; btn.textContent='⏳ Suche GPS...'; btn.disabled=true;
+ navigator.geolocation.getCurrentPosition(
+  pos=>{userLat=pos.coords.latitude; userLon=pos.coords.longitude; map.setView([userLat,userLon],13); updateMap(); if(circle) map.fitBounds(circle.getBounds(),{padding:[24,24]}); btn.textContent=orig; btn.disabled=false;},
+  err=>{alert('GPS: '+err.message); btn.textContent=orig; btn.disabled=false;}
+ );
+};
+async function doSearch(){
  const q=document.getElementById('searchInput').value.trim(); if(!q) return;
  if(!confirm('Externe Suche via OpenStreetMap Nominatim nutzen? Text wird an nominatim.openstreetmap.org gesendet.')) return;
- try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(q)+'&limit=1&countrycodes=de',{headers:{'Accept-Language':'de'}}); const j=await r.json(); if(j[0]){userLat=+j[0].lat; userLon=+j[0].lon; map.setView([userLat,userLon],13); updateMap();} else alert('Nichts gefunden');}catch{alert('Suche fehlgeschlagen');}
-};
+ try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(q)+'&limit=1&countrycodes=de',{headers:{'Accept-Language':'de'}}); const j=await r.json(); if(j[0]){userLat=+j[0].lat; userLon=+j[0].lon; map.setView([userLat,userLon],13); updateMap(); if(circle) map.fitBounds(circle.getBounds(),{padding:[24,24]});} else alert('Nichts gefunden');}catch{alert('Suche fehlgeschlagen');}
+}
+document.getElementById('searchBtn').onclick=doSearch;
+document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault(); doSearch();}});
 document.getElementById('filterText').oninput=e=>{search=e.target.value.toLowerCase(); renderList();};
 document.getElementById('favFilter').onclick=e=>{favOnly=!favOnly; e.currentTarget.classList.toggle('active',favOnly); renderList();};
 document.getElementById('nowBtn').onclick=e=>{nowMode=!nowMode; e.currentTarget.classList.toggle('active',nowMode); renderList();};
@@ -416,11 +431,19 @@ document.getElementById('printBtn').onclick=()=>{
  if(!favPlaces.length){ alert('Noch keine Favoriten gespeichert.'); return; }
  const win=window.open('','_blank');
  win.document.write(`<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>Meine ruhigen Orte</title>
- <style>body{font-family:-apple-system,Arial,sans-serif;color:#1A365D;max-width:600px;margin:30px auto;font-size:15px}h1{font-size:24px}h2{font-size:18px;margin:22px 0 4px;border-top:1px solid #ccc;padding-top:12px}p{font-size:14.5px;line-height:1.55;margin:4px 0}</style>
+ <style>body{font-family:-apple-system,Arial,sans-serif;color:#1A365D;max-width:600px;margin:30px auto;font-size:15px}h1{font-size:24px}h2{font-size:18px;margin:22px 0 4px;border-top:1px solid #ccc;padding-top:12px}p{font-size:14.5px;line-height:1.55;margin:4px 0}img{max-width:200px;border-radius:8px;display:block;margin:6px 0}</style>
  </head><body><h1>Meine ruhigen Orte</h1>`+
- favPlaces.map(p=>`<h2>${esc(p.name)}</h2><p>${esc(p.why)}</p><p><b>Anreise:</b> ${esc(p.anreise)}</p><p><b>Regeln:</b> ${esc(p.regeln)}</p>${notes[p.id]?`<p><b>Meine Notiz:</b> ${esc(notes[p.id])}</p>`:''}`).join('')+
+ favPlaces.map(p=>`<h2>${esc(p.name)}</h2>${photos[p.id]&&photos[p.id][0]?`<img src="${photos[p.id][0]}">`:''}<p>${esc(p.why)}</p><p><b>Anreise:</b> ${esc(p.anreise)}</p><p><b>Regeln:</b> ${esc(p.regeln)}</p>${notes[p.id]?`<p><b>Meine Notiz:</b> ${esc(notes[p.id])}</p>`:''}`).join('')+
  `</body></html>`);
  win.document.close(); win.focus(); setTimeout(()=>win.print(),300);
+};
+document.getElementById('shareFavBtn').onclick=()=>{
+ const favPlaces=[...places,...osmResults].filter(p=>favs.includes(p.id));
+ if(!favPlaces.length){ alert('Noch keine Favoriten gespeichert.'); return; }
+ const text='Meine ruhigen Orte:\n'+favPlaces.map(p=>'• '+p.name).join('\n');
+ if(navigator.share){ navigator.share({title:'Meine ruhigen Orte',text}).catch(e=>{ if(e && e.name==='AbortError') return; }); }
+ else if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(()=>alert('Liste kopiert:\n\n'+text)).catch(()=>alert(text)); }
+ else alert(text);
 };
 
 

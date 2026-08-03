@@ -151,6 +151,22 @@ In Deutschland gilt TMG §5 auch für private GitHub Pages, wenn öffentlich err
 
 Stand: 27.07.2026, letzte Prüfung Nachtrag 13
 
+## Nachtrag 15 (Claude, 02.08.2026) – Funktions- und Optik-Feinschliff
+
+Auf Jans Wunsch die zuvor vorgeschlagenen Politur-Punkte umgesetzt:
+
+1. **Enter-Taste bei der Ortssuche** löst jetzt die Suche aus (vorher nur per Klick auf „Suchen").
+2. **Ladeanzeige beim GPS-Button:** „📍 Mein Standort" zeigt während der GPS-Abfrage „⏳ Suche GPS..." und ist währenddessen deaktiviert, statt kommentarlos zu warten.
+3. **Radius-Auto-Zoom:** Karte fittet sich per `fitBounds` automatisch auf den Radius-Kreis, sowohl beim Schieberegler als auch bei Standort/Ortssuche – vorher blieb der Kartenausschnitt bei großem Radius zu eng.
+4. **Mehrere Fotos pro Ort (bis zu 3):** Datenmodell von einzelnem String auf Array umgestellt, inkl. automatischer Migration bestehender `localStorage`-Daten beim ersten Laden (kein Datenverlust für Nutzer der alten Version). Jedes Foto einzeln löschbar.
+5. **„🔗 Alle Favoriten teilen":** Neuer Button, teilt eine einfache Namensliste der eigenen Favoriten über die Web-Share-API bzw. Zwischenablage als Fallback – kein neuer Rechtspunkt, keine Datenübertragung an Dritte.
+6. **Druckansicht zeigt jetzt das erste Foto** je favorisiertem Ort mit.
+7. **Barrierefreiheit:** `aria-label` für reine Icon-Elemente ergänzt (Favoriten-Herz, Foto-löschen, Vollbild-, Theme-, Standort- und Klapp-Buttons) – Sichtbare Texte an den übrigen Buttons blieben unverändert.
+8. **Leerer Zustand** („Kein ruhiger Ort im Radius") hat jetzt ein kleines Icon statt reinem Fließtext.
+9. Anleitung und README an die neuen Funktionen angepasst. Cache-Version auf v13 erhöht.
+
+JavaScript-Syntax nach allen Änderungen erneut fehlerfrei geprüft. Rechtlich/lizenztechnisch keine Auswirkungen – alle neuen Funktionen laufen rein clientseitig ohne neue externe Dienste.
+
 ## Nachtrag 14 (Claude, 02.08.2026) – Finaler Check vor GitHub-Upload
 
 Ganzheitliche Abschlussprüfung (Recht, Lizenzen, Funktion, Optik) vor dem geplanten Upload:

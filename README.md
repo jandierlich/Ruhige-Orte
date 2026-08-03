@@ -17,9 +17,9 @@ Live Demo: `https://deinname.github.io/ruhige-orte/`
 - **🎲 Überrasch mich:** Zufälliger Ort aus den aktuellen Filtern
 - **🌅 Goldene Stunde:** Lokal berechnet (kein API-Call), je Ort
 - **🌦️ Wetter (optional):** Live-Abruf via Open-Meteo, nur nach Klick + Consent
-- **📷 Foto zur Notiz:** Eigenes Foto pro Ort, lokal gespeichert (automatisch verkleinert)
+- **📷 Fotos zur Notiz:** Bis zu 3 eigene Fotos pro Ort, lokal gespeichert (automatisch verkleinert)
 - **⬇️⬆️ Backup:** Export/Import aller lokalen Daten als JSON
-- **🖨️ Druckansicht:** Eigene Favoriten als druckbare Liste
+- **🖨️🔗 Druckansicht & Teilen:** Eigene Favoriten als druckbare Liste (inkl. Foto) oder als Namensliste teilen
 - **📡 Offline-fähig:** Service Worker cached die App-Shell
 - **🔗 Teilen:** Link wie `#wittmoor` – kein Server
 - **🌓 Hell/Dunkel:** System-Auto + manueller Toggle, speichert lokal
