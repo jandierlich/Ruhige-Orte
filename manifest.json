@@ -1,7 +1,7 @@
 {
   "name": "Ruhige Orte",
   "short_name": "Ruhige Orte",
-  "description": "Deutschlandweit stille Pl\u00e4tze finden \u2013 offline + Live OSM Suche",
+  "description": "Live ruhige Plätze in Deutschland finden – Orte, Cafés & Eisdielen via OpenStreetMap",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#EDF4FB",

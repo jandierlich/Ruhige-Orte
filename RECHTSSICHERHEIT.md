@@ -151,6 +151,22 @@ In Deutschland gilt TMG §5 auch für private GitHub Pages, wenn öffentlich err
 
 Stand: 27.07.2026, letzte Prüfung Nachtrag 13
 
+## Nachtrag 18 (Claude, 04.08.2026) – Feste Orte-Liste entfernt, nur noch Live-Ergebnisse
+
+Auf Jans expliziten Wunsch wurde die komplette feste, kuratierte Orte-Liste entfernt (bisher 27 Einträge: 7 rund um Tangstedt + 20 bundesweite Beispiele). Auf Nachfrage entschied Jan sich für die vollständige Variante: **auch** die 7 lokalen Tangstedt-Orte fliegen raus, nicht nur die bundesweiten Beispiele. Die App zeigt jetzt ausschließlich:
+1. Live-Ergebnisse aus der Overpass API für den aktuellen Kartenausschnitt (wie bisher, unverändert in der Funktionsweise/Rechtslage – siehe frühere Nachträge).
+2. Über „⭐ Merken" dauerhaft lokal gespeicherte Orte aus früheren Live-Suchen.
+
+**Dabei behobener Alt-Bug (unabhängig von dieser Änderung, aber jetzt kritisch):** Gemerkte OSM-Orte (`localStorage`-Key `ruhige-orte-custom`) wurden bisher nur beim Import eines Backups, nicht aber beim normalen Neustart der App wieder in die Orte-Liste geladen – sie verschwanden nach einem Browser-/App-Neustart faktisch aus der Ansicht (blieben nur als Favoriten-ID ohne zugehörigen Ort). Jetzt werden sie beim Start immer korrekt nachgeladen.
+
+**Weitere Anpassungen:**
+- Leerer Zustand der Ergebnisliste unterscheidet jetzt zwischen „noch keine Live-Suche gestartet" (Hinweis auf den Live-Suche-Button) und „Filter/Radius zu eng" (bisheriger Hinweis).
+- Abschnitt „Standort & Suche" (enthält den Live-Suche-Button) ist jetzt standardmäßig aufgeklappt, da er nun der einzige Weg ist, überhaupt Orte zu sehen.
+- Offline-Aussagen in `anleitung.html`, `README.md`, `index.html` und `manifest.json` präzisiert: Die App-Hülle sowie bereits gemerkte Orte/Favoriten/Notizen/Fotos funktionieren weiterhin offline, neue Orte über die Live-Suche brauchen aber zwingend eine Verbindung (vorher implizierte „läuft offline", dass direkt Inhalte vorhanden sind).
+- `README.md`: Abschnitt „27 Orte inklusive" ersetzt durch Beschreibung des Live-only-Modells.
+
+**Rechtlich/lizenztechnisch:** Keine neuen Auswirkungen – die Live-Suche funktionierte bereits vorher exakt so (nutzergesteuert, mit Bestätigungsdialog, Rate-Limit, Cache); es fällt lediglich zusätzlicher, selbst verfasster Beispieltext (Geschichte/Regeln-Texte zu den 27 Orten) weg. Cache-Version auf v17 erhöht.
+
 ## Nachtrag 17 (Claude, 04.08.2026) – Vollständiger Plausibilitäts- und Rechtscheck (auf Jans expliziten Wunsch)
 
 Jan bat um einen kompletten Check aller Komponenten (Funktion, Optik, Recht, Lizenzen – insbesondere externe Links), da ihm die rechtliche Sicherheit am wichtigsten ist. Dazu wurden die aktuellen Nutzungsbedingungen aller extern eingebundenen Dienste per Websuche neu geprüft (nicht nur aus Trainingswissen), da sich diese seit dem letzten Check geändert haben könnten. Ergebnis:

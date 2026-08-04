@@ -20,17 +20,15 @@ Live Demo: `https://deinname.github.io/ruhige-orte/`
 - **📷 Fotos zur Notiz:** Bis zu 3 eigene Fotos pro Ort, lokal gespeichert (automatisch verkleinert)
 - **⬇️⬆️ Backup:** Export/Import aller lokalen Daten als JSON
 - **🖨️🔗 Druckansicht & Teilen:** Eigene Favoriten als druckbare Liste (inkl. Foto) oder als Namensliste teilen
-- **📡 Offline-fähig:** Service Worker cached die App-Shell
-- **🔗 Teilen:** Link wie `#wittmoor` – kein Server
+- **📡 Teiloffline:** Service Worker cached die App-Shell; gemerkte Orte, Favoriten, Notizen & Fotos bleiben offline sichtbar (neue Live-Suche braucht Internet)
+- **🔗 Teilen:** Link wie `#osm_123456` – kein Server
 - **🌓 Hell/Dunkel:** System-Auto + manueller Toggle, speichert lokal
 - **⛶ Kartenvollbild:** Mit Escape-Taste zum Schließen
 - **📱 iPhone optimiert:** 440px max, 100dvh, safe-area, Bottom-Sheet, 44px Touch-Targets
 
-## 🗺️ 27 Orte inklusive
+## 🔍 Ausschließlich Live-Ergebnisse (OSM)
 
-7 rund um Tangstedt (Wittmoor, Duvenstedter Brook, Tangstedter Forst, Bürger-Natur-Park, Wilstedter See, Kirche, Moorgehege) + 20 deutschlandweit von Rügen bis Allgäu.
-
-Alle Orte mit: Warum ruhig, Tags, Mood, Barrierefreiheit, Regeln, Geschichte (1 Satz), ruhige Anreise (Rad/ÖPNV/Parkplatz).
+Diese App hat **keine feste, vorgefertigte Orte-Liste**. Alle Orte kommen live von der Overpass API (OpenStreetMap) für den aktuellen Kartenausschnitt – Parks, Aussichtspunkte, Quellen, Cafés, Eisdielen. Nutzer können einzelne Treffer per „⭐ Merken" dauerhaft lokal speichern; diese bleiben dann auch offline sichtbar.
 
 ## 🚀 Auf GitHub Pages veröffentlichen
 
