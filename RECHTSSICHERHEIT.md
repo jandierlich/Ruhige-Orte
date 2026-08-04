@@ -151,6 +151,17 @@ In Deutschland gilt TMG §5 auch für private GitHub Pages, wenn öffentlich err
 
 Stand: 27.07.2026, letzte Prüfung Nachtrag 13
 
+## Nachtrag 22 (Claude, 04.08.2026) – Overpass-Suche robuster, Reset-Button korrigiert
+
+Jan meldete: Live-Suche oft ohne Erfolg und ohne erkennbare Meldung. Ursachenanalyse: Es gab zwar in jedem Fehlerfall bereits eine Meldung im Code, aber (a) kein Timeout pro Overpass-Server – ein hängender Server ließ die Anfrage ggf. sehr lange unbeantwortet, bevor überhaupt ein Fehler erkannt wurde, (b) die Statusbox konnte aus dem sichtbaren Bereich gescrollt sein und wurde dadurch leicht übersehen, (c) eine Rückgabe mit „0 Treffer" sah optisch kaum anders aus als ein Fehler. Behoben:
+- Pro Overpass-Server jetzt ein 9-Sekunden-Timeout via `AbortController`, danach automatischer Wechsel zum nächsten Spiegelserver statt langem Warten.
+- Antwort wird zusätzlich validiert (`Array.isArray(json.elements)`) – kommt ein Server mit unerwarteter/leerer Antwort statt eines HTTP-Fehlers zurück, wird das jetzt auch als Fehler behandelt und der nächste Server versucht.
+- Statusbox scrollt beim Start der Suche automatisch ins sichtbare Bild.
+- „0 Treffer" bekommt jetzt eine eigene, klar unterscheidbare Meldung („Suche war erfolgreich, aber keine passenden Orte gefunden") statt der bisherigen, leicht zu übersehenden „✅ 0 OSM-Orte gefunden".
+- Fehlermeldung präzisiert: „alle 3 Server überlastet, zu langsam oder ohne Antwort".
+
+Zusätzlich auf Wunsch: Der „Reset"-Button (jetzt „↺ Filter zurücksetzen") bezog sich bisher fälschlich auch auf die geladenen Live-Ergebnisse (`osmResults=[]`) und blendete die Statusbox aus – das wurde entfernt. Reset betrifft jetzt ausschließlich Textfilter, „JETZT ruhig" und „Meine Orte"; Standort, Radius und geladene Live-Ergebnisse bleiben unangetastet. Anleitung entsprechend ergänzt. Cache-Version auf v21 erhöht. Rechtlich keine Auswirkung – gleiche Dienste, robusteres Fehlerhandling.
+
 ## Nachtrag 21 (Claude, 04.08.2026) – Restaurants ergänzt
 
 Auf Nachfrage/Wunsch die Overpass-Query um `amenity=restaurant` erweitert. Namens-, Tag- und Stimmungs-Zuordnung ergänzt („Restaurant (OSM)"). Anleitung und README-Beispielquery aktualisiert. Cache-Version auf v20 erhöht. Rechtlich keine Änderung.
