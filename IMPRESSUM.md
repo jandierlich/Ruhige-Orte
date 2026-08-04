@@ -14,7 +14,7 @@ Kontakt:
 Telefon: +49 162 7112283
 E-Mail: jandierlich@googlemail.com
 
-Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
+Inhaltlich verantwortlich gemäß § 18 Abs. 2 MStV:
 Jan Dierlich, Anschrift wie oben
 
 Quelle: Erstellt mit Hilfe von datenschutz.org Muster
@@ -39,7 +39,7 @@ Alle Daten bleiben auf dem Gerät und können im Browser unter Website-Daten gel
 
 ### 3. Karten & Suche
 
-**Karten:** Leaflet mit Tiles von CARTO basierend auf OpenStreetMap Daten. Beim Laden der Karte werden Kacheln von `basemaps.cartocdn.com` geladen. Dabei wird die IP-Adresse an CARTO übertragen (technisch notwendig). Es gelten: https://carto.com/privacy/
+**Karten:** Leaflet mit den offiziellen Kartenkacheln von OpenStreetMap (`tile.openstreetmap.org`). Dabei wird die IP-Adresse an die OpenStreetMap Foundation übertragen (technisch notwendig). Es gelten: https://operations.osmfoundation.org/policies/tiles/
 
 **Suche (optional):** Nur wenn du auf "Suchen" klickst, wird der eingegebene Ort an Nominatim (nominatim.openstreetmap.org) gesendet. Es gelten die OSM Bedingungen: https://operations.osmfoundation.org/policies/nominatim/ – Bitte nur sparsam nutzen.
 

@@ -151,6 +151,34 @@ In Deutschland gilt TMG §5 auch für private GitHub Pages, wenn öffentlich err
 
 Stand: 27.07.2026, letzte Prüfung Nachtrag 13
 
+## Nachtrag 17 (Claude, 04.08.2026) – Vollständiger Plausibilitäts- und Rechtscheck (auf Jans expliziten Wunsch)
+
+Jan bat um einen kompletten Check aller Komponenten (Funktion, Optik, Recht, Lizenzen – insbesondere externe Links), da ihm die rechtliche Sicherheit am wichtigsten ist. Dazu wurden die aktuellen Nutzungsbedingungen aller extern eingebundenen Dienste per Websuche neu geprüft (nicht nur aus Trainingswissen), da sich diese seit dem letzten Check geändert haben könnten. Ergebnis:
+
+**🔴 Wichtigster Fund – CARTO-Kartenkacheln waren nicht mehr frei nutzbar:**
+Die App lud Kartenkacheln von `basemaps.cartocdn.com` (CARTO Voyager). Die aktuelle, offizielle Lizenzdatei von CARTO (`github.com/CartoDB/basemap-styles/LICENSE.md`, Stand 2026) stellt inzwischen ausdrücklich klar: *„access to CARTO's basemap tile services is restricted to CARTO enterprise customers and Non-Profit GRANTS only and is not available for free public use."* Die kostenlose öffentliche Nutzung dieser Kachel-URLs ist damit laut CARTO selbst nicht mehr gedeckt – unabhängig davon, dass die URL technisch weiterhin erreichbar ist. Da Jan explizit "absolut sicher, erlaubt und kostenlos" gefordert hat, wurde dies als Risiko eingestuft und behoben:
+- Kartenkacheln umgestellt auf den offiziellen, kostenlosen Standard-Tile-Server der OpenStreetMap Foundation: `tile.openstreetmap.org` (klar dokumentierte, kostenlose Nutzungsbedingungen unter operations.osmfoundation.org/policies/tiles/, erlaubt normale interaktive Nutzung durch echte Browser ohne Weiteres – die App lädt ausschließlich sichtbare Kartenausschnitte, kein Offline-Vorab-Download, erfüllt damit alle Anforderungen).
+- Attribution im Code auf „© OpenStreetMap contributors" (verlinkt) angepasst, `maxZoom` von 20 auf 19 (OSM-Standardlimit) korrigiert.
+- `sw.js`: `NO_CACHE_HOSTS` von `basemaps.cartocdn.com` auf `tile.openstreetmap.org` umgestellt, damit Kartenkacheln weiterhin nicht dauerhaft im Service-Worker-Cache landen (Offline-Vorhaltung von Kacheln ist laut OSM-Tile-Policy ausdrücklich untersagt). Dabei außerdem bemerkt und behoben: die beiden Overpass-Spiegelserver (`overpass.kumi.systems`, `overpass.private.coffee`) fehlten bisher in dieser Liste und wären dadurch ungewollt dauerhaft zwischengespeichert worden – jetzt ergänzt.
+- `datenschutz.html`, `IMPRESSUM.md` und `README.md`: CARTO-Erwähnungen durch die neue OSM-Kachelquelle ersetzt, Links auf die OSM-Tile-Policy statt CARTO-Datenschutz gesetzt.
+
+**🟡 Impressum – veraltete Rechtsgrundlage:**
+Das Impressum verwies auf „§ 55 Abs. 2 RStV". Der Rundfunkstaatsvertrag (RStV) wurde bereits im November 2020 durch den Medienstaatsvertrag (MStV) abgelöst; die entsprechende Pflichtangabe ist seither „§ 18 Abs. 2 MStV". Mehrere aktuelle Rechtsquellen (u.a. IHK Düsseldorf) bezeichnen den fortgesetzten Verweis auf § 55 RStV ausdrücklich als unzulässig. Korrigiert in `impressum.html` und `IMPRESSUM.md` auf „Inhaltlich verantwortlich gemäß § 18 Abs. 2 MStV".
+
+**🟢 Open-Meteo – Attribution nachgeschärft:** Die CC-BY-4.0-Lizenz von Open-Meteo verlangt einen Link neben jeder Anzeige ihrer Daten. Bisher stand nur der Text „(Open-Meteo)" ohne Link da – jetzt verlinkt zu open-meteo.com.
+
+**Bestätigt (keine Änderung nötig), jeweils per aktueller Websuche gegengeprüft:**
+- **Nominatim:** Nutzung ist durch Klick + Bestätigungsdialog nutzerausgelöst und moderat im Volumen – entspricht genau der von der OSM Foundation erlaubten Nutzungsart („Use that is directly triggered by the end-user... is ok, provided that your number of users is moderate"). Kein automatisches/serienweises Abfragen im Code.
+- **Overpass API (3 Spiegelserver):** Alle drei sind kostenlose, für diese Art Nutzung vorgesehene OSM-Community-Dienste; Anfrage nur nach Klick + Bestätigung, mit 10-Sek-Sperre und 5-Min-Cache – deutlich im fairen Rahmen.
+- **Open-Meteo:** Kostenlose Nutzung bis 10.000 Anfragen/Tag für nicht-kommerzielle Zwecke, keine Anmeldung nötig – die App bleibt bei einer Handvoll Klicks pro Sitzung weit darunter.
+- **Leaflet (unpkg.com CDN):** BSD-2-Clause, freie Nutzung, unpkg ist ein etabliertes kostenloses CDN für npm-Pakete.
+- **Fonts:** weiterhin ausschließlich System-Fonts, keine Google Fonts (siehe FONTS.md).
+- **GitHub Pages Hosting:** unverändert korrekt in Datenschutz dokumentiert.
+
+**Funktion & Optik (vollständiger erneuter Durchlauf):** Kein weiterer Fund. JavaScript-Syntax fehlerfrei geprüft, Datenmodell, Filter- und Renderlogik konsistent, alle referenzierten Dateien/IDs vorhanden. Einziger optischer Hinweis: Die Standard-OSM-Kacheln sind etwas farbintensiver/detailreicher als der vorherige CARTO-„Voyager"-Stil – der bestehende Dark-Mode-Filter (`saturate/brightness/contrast`, kein Invert) sollte weiterhin gut funktionieren, eine kurze Sichtprüfung nach dem Upload wird empfohlen, da hier keine Kachel-Vorschau ohne Netzwerkzugriff möglich war.
+
+Cache-Version auf v16 erhöht.
+
 ## Nachtrag 16 (Claude, 03.08.2026) – Icon randlos & etwas heller
 
 Auf Jans Wunsch das App-/Homescreen-Icon (icon-32/180/192/512.png) überarbeitet: Bisher lag die eigentliche Grafik (Motiv mit eigenen abgerundeten Ecken) mit deutlichem transparentem Rand mittig auf der 512×512-Fläche – dadurch erschien beim automatischen iOS-Zuschnitt ein sichtbarer "Rahmen" um ein kleineres, eigenständig abgerundetes Icon. Behoben durch: zentrierten, komplett deckenden Bildausschnitt (ohne die eingebauten abgerundeten Ecken und ohne Transparenz-Rand) auf volle Kantenlänge hochskaliert, sodass das Motiv randlos bis zum Rand reicht – iOS rundet die Ecken jetzt selbst sauber ab. Zusätzlich Helligkeit um ca. 14% erhöht. Alle vier Icon-Größen aus einem gemeinsamen Master neu erzeugt, `manifest.json` unverändert (kein `maskable`-Purpose gesetzt, daher unproblematisch für randlose Icons).

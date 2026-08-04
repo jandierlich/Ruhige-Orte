@@ -112,7 +112,7 @@ Suche: Nominatim (nur nach Klick, mit Consent-Hinweis)
 ## 📜 Rechtlich & Lizenzen
 
 - **Code:** MIT License – siehe LICENSE
-- **Karten:** © OpenStreetMap contributors, ODbL License, Tiles © CARTO
+- **Karten:** © OpenStreetMap contributors, ODbL License, Kartenkacheln von tile.openstreetmap.org
 - **Suche:** Nominatim – Nutzung nur opt-in, es gelten OSM Nutzungsbedingungen https://operations.osmfoundation.org/policies/nominatim/
 - **Keine Cookies, kein Tracking, kein Backend.** Standort verbleibt nur im Browser. Keine Datenübertragung an Server.
 - **Impressumspflicht in DE:** `impressum.html` und `datenschutz.html` sind aus der App heraus verlinkt (Footer-Card) und bereits mit den Kontaktdaten aus IMPRESSUM.md befüllt. `IMPRESSUM.md` bleibt die Text-Quelle im Repo, ausschlaggebend für Besucher sind die verlinkten HTML-Seiten.

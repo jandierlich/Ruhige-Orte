@@ -126,7 +126,7 @@ const places=[{"id": "wittmoor", "name": "Wittmoor", "lat": 53.711, "lon": 10.07
 let userLat=null,userLon=null,radius=5,activeMoods=[],activeAccess=[],search="",favOnly=false,nowMode=false;
 let osmResults=[],osmCache={},lastOverpassFetch=0;
 const map=L.map('map',{zoomControl:false}).setView([53.73,10.08],12);
-let mapTiles=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap © CARTO',maxZoom:20,detectRetina:true}).addTo(map);
+let mapTiles=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',maxZoom:19}).addTo(map);
 let userMarker=null,circle=null,markers=[];
 function hav(a,b,c,d){const R=6371, dLa=(c-a)*Math.PI/180, dLo=(d-b)*Math.PI/180, e=Math.sin(dLa/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dLo/2)**2; return R*2*Math.atan2(Math.sqrt(e),Math.sqrt(1-e));}
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}}; const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
@@ -193,7 +193,7 @@ window.loadWeather=async(id,lat,lon)=>{
   const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation,wind_speed_10m&timezone=auto`);
   const j=await r.json();
   const c=j.current;
-  box.innerHTML=`🌡️ ${c.temperature_2m}°C · 💨 ${c.wind_speed_10m} km/h Wind · 🌧️ ${c.precipitation} mm Niederschlag <span style="opacity:.7">(Open-Meteo)</span>`;
+  box.innerHTML=`🌡️ ${c.temperature_2m}°C · 💨 ${c.wind_speed_10m} km/h Wind · 🌧️ ${c.precipitation} mm Niederschlag <span style="opacity:.7">(<a href="https://open-meteo.com/" target="_blank" rel="noopener" style="color:inherit">Open-Meteo</a>)</span>`;
  }catch{ box.textContent='❌ Wetter konnte nicht geladen werden.'; }
 };
 

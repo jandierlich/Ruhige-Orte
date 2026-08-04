@@ -1,4 +1,4 @@
-const CACHE = 'ruhige-orte-v15';
+const CACHE = 'ruhige-orte-v16';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -32,7 +32,7 @@ self.addEventListener('activate', e => {
 // Externe Live-Dienste (Overpass, Nominatim, Open-Meteo, Kartenkacheln) laufen
 // bewusst NICHT über den Cache-Fallback, damit dort immer frische Daten kommen
 // bzw. offline korrekt ein Fehler auftritt statt veralteter Ergebnisse.
-const NO_CACHE_HOSTS = ['overpass-api.de', 'nominatim.openstreetmap.org', 'api.open-meteo.com', 'basemaps.cartocdn.com'];
+const NO_CACHE_HOSTS = ['overpass-api.de', 'overpass.kumi.systems', 'overpass.private.coffee', 'nominatim.openstreetmap.org', 'api.open-meteo.com', 'tile.openstreetmap.org'];
 
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
