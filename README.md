@@ -8,8 +8,8 @@ Live Demo: `https://deinname.github.io/ruhige-orte/`
 
 - **📍 Standort:** GPS nur im Browser, Auf Karte tippen, oder Ort eingeben (Nominatim nur nach Klick, opt-in)
 - **📏 Radius:** 1-20 km frei wählbar
-- **🎭 Stimmung:** Filter 📖 Lesen 🧘 Durchatmen 👶 Mit Kind 🐕 Mit Hund 🧺 Picknick
-- **♿ Komfort:** Stufenlos, <300m kurzer Weg, Parkplatz, Schattig, Digital Detox
+- **🔍 Eigener Filter:** Freitext-Filter über Name, Beschreibung und Tags aller geladenen Orte
+- **📍 Details je Ort:** Genaue Entfernung vom Standort, weicher Stimmungs-Hinweis, Barrierefreiheit laut OSM (wenn hinterlegt)
 - **🕐 Beste Zeit:** Matrix morgens/mittags/abends/Wochenende grün/gelb/rot
 - **❤️ Favoriten + Notizen:** Nur localStorage, 100% DSGVO safe
 - **🔇 Ruhe-Check:** 1-5 Slider, speichert lokal mit Zeitstempel
@@ -28,7 +28,7 @@ Live Demo: `https://deinname.github.io/ruhige-orte/`
 
 ## 🔍 Ausschließlich Live-Ergebnisse (OSM)
 
-Diese App hat **keine feste, vorgefertigte Orte-Liste**. Alle Orte kommen live von der Overpass API (OpenStreetMap) für den aktuellen Kartenausschnitt – Parks, Aussichtspunkte, Quellen, Cafés, Eisdielen. Nutzer können einzelne Treffer per „⭐ Merken" dauerhaft lokal speichern; diese bleiben dann auch offline sichtbar.
+Diese App hat **keine feste, vorgefertigte Orte-Liste**. Alle Orte kommen live von der Overpass API (OpenStreetMap) für den aktuellen Kartenausschnitt – Parks, Aussichtspunkte, Quellen, Cafés, Eisdielen, Restaurants, Seeufer/Strände, Picknickplätze, Naturschutzgebiete. Nutzer können einzelne Treffer per „⭐ Merken" dauerhaft lokal speichern; diese bleiben dann auch offline sichtbar.
 
 ## 🚀 Auf GitHub Pages veröffentlichen
 
@@ -52,6 +52,11 @@ Die Live-Suche nutzt diese Query (in `app.html`, Funktion `fetchOverpass`):
   node["natural"="spring"]({{bbox}});
   node["amenity"="cafe"]({{bbox}});
   node["amenity"="ice_cream"]({{bbox}});
+  node["natural"="beach"]({{bbox}});
+  way["natural"="beach"]({{bbox}});
+  node["tourism"="picnic_site"]({{bbox}});
+  way["leisure"="nature_reserve"]({{bbox}});
+  node["amenity"="restaurant"]({{bbox}});
 );
 out center 30;
 ```

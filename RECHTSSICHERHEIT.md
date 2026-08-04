@@ -151,6 +151,26 @@ In Deutschland gilt TMG §5 auch für private GitHub Pages, wenn öffentlich err
 
 Stand: 27.07.2026, letzte Prüfung Nachtrag 13
 
+## Nachtrag 21 (Claude, 04.08.2026) – Restaurants ergänzt
+
+Auf Nachfrage/Wunsch die Overpass-Query um `amenity=restaurant` erweitert. Namens-, Tag- und Stimmungs-Zuordnung ergänzt („Restaurant (OSM)"). Anleitung und README-Beispielquery aktualisiert. Cache-Version auf v20 erhöht. Rechtlich keine Änderung.
+
+## Nachtrag 20 (Claude, 04.08.2026) – Drei neue Ortstypen in der Live-Suche
+
+Auf Jans Auswahl hin die Overpass-Query um drei Kategorien erweitert: Seeufer/Strände (`natural=beach`, node+way), Picknickplätze (`tourism=picnic_site`), Naturschutzgebiete/Wälder (`leisure=nature_reserve`, way). Bänke wurden bewusst nicht wieder aufgenommen (siehe Nachtrag 13 – zu viele/zu wahllose Treffer). Namens-, Tag- und Stimmungs-Zuordnung für die neuen Typen ergänzt (z.B. „Strand/Seeufer (OSM)", Mood-Hinweis „Picknick" bei Picknickplätzen). Anleitung und README entsprechend aktualisiert; dabei auch eine veraltete Erwähnung von „Bänken" in der Anleitung korrigiert (Bänke waren seit Nachtrag 13 gar nicht mehr Teil der Suche, der Anleitungstext war seither nicht mehr korrekt). Cache-Version auf v19 erhöht. Rechtlich keine Änderung – gleiche Overpass-API, gleicher nutzergesteuerter Ablauf.
+
+## Nachtrag 19 (Claude, 04.08.2026) – Stimmung/Komfort-Filter entfernt, Details inhaltlich optimiert
+
+Jan bemerkte die Diskrepanz „27 OSM-Orte gefunden" vs. „7 Orte im Radius" – Ursache: Die Live-Suche fragt den sichtbaren Kartenausschnitt ab (kann größer sein als der gewählte Radius), die Liste filtert zusätzlich nach dem tatsächlichen Radius. Die Erfolgsmeldung nennt jetzt beide Zahlen („X im sichtbaren Kartenausschnitt, davon Y im Radius").
+
+Auf Wunsch entfernt: die Filter-Pill-Reihen „STIMMUNG" (Lesen/Durchatmen/Mit Kind/Mit Hund/Picknick) und „KOMFORT" (Stufenlos/<300m/Parkplatz/Schattig/Digital Detox) aus dem Bereich „Filter & Aktionen". Der freie Textfilter (individueller Filter) bleibt erhalten. Grund für die inhaltliche Optimierung statt reiner Verschiebung: Die Komfort-Werte für Live-OSM-Orte waren größtenteils hartkodierte Platzhalter ohne echte Datengrundlage (`kurz:true`, `parkplatz:false`, `schatten:false`, `detox:false` – unabhängig vom tatsächlichen Ort), hätten als Fakt dargestellt also in die Irre geführt. Ersetzt durch:
+- **Details je Ort:** neue Zeile „📍 Entfernung von deinem Standort" (echter berechneter Wert, ersetzt den irreführenden „<300m"-Komfortpunkt).
+- **Details je Ort:** „💭 Könnte passen für" – die bisherige Stimmungs-Zuordnung, jetzt als klar erkennbarer weicher Hinweis statt als (vorgeblich objektives) Filterkriterium.
+- **Details je Ort:** „♿ Barrierefrei laut OSM" – nur angezeigt, wenn der `wheelchair`-Tag in den echten OSM-Daten vorhanden ist (ehrliche Übernahme realer Daten statt Platzhalter).
+- `getFiltered()`, Reset-Button, Variablendeklaration entsprechend bereinigt, keine toten Referenzen (Syntaxcheck bestanden).
+
+Anleitung und README an die neue Struktur angepasst. Cache-Version auf v18 erhöht.
+
 ## Nachtrag 18 (Claude, 04.08.2026) – Feste Orte-Liste entfernt, nur noch Live-Ergebnisse
 
 Auf Jans expliziten Wunsch wurde die komplette feste, kuratierte Orte-Liste entfernt (bisher 27 Einträge: 7 rund um Tangstedt + 20 bundesweite Beispiele). Auf Nachfrage entschied Jan sich für die vollständige Variante: **auch** die 7 lokalen Tangstedt-Orte fliegen raus, nicht nur die bundesweiten Beispiele. Die App zeigt jetzt ausschließlich:
