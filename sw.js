@@ -1,4 +1,4 @@
-const CACHE = 'ruhige-orte-v21';
+const CACHE = 'ruhige-orte-v22';
 const CORE_ASSETS = [
   './',
   './index.html',

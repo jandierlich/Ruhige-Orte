@@ -8,13 +8,11 @@ Live Demo: `https://deinname.github.io/ruhige-orte/`
 
 - **📍 Standort:** GPS nur im Browser, Auf Karte tippen, oder Ort eingeben (Nominatim nur nach Klick, opt-in)
 - **📏 Radius:** 1-20 km frei wählbar
-- **🔍 Eigener Filter:** Freitext-Filter über Name, Beschreibung und Tags aller geladenen Orte
+- **🎯 Ortstyp-Filter:** Ein Button pro Kategorie (Aussichtspunkt, Park, Quelle, Café, Eisdiele, Restaurant, Strand/Seeufer, Picknickplatz, Naturschutzgebiet), alle starten aktiv
 - **📍 Details je Ort:** Genaue Entfernung vom Standort, weicher Stimmungs-Hinweis, Barrierefreiheit laut OSM (wenn hinterlegt)
 - **🕐 Beste Zeit:** Matrix morgens/mittags/abends/Wochenende grün/gelb/rot
 - **❤️ Favoriten + Notizen:** Nur localStorage, 100% DSGVO safe
 - **🔇 Ruhe-Check:** 1-5 Slider, speichert lokal mit Zeitstempel
-- **✨ JETZT ruhig:** Sortiert nach aktueller Zeit + Wochentag
-- **🎲 Überrasch mich:** Zufälliger Ort aus den aktuellen Filtern
 - **🌅 Goldene Stunde:** Lokal berechnet (kein API-Call), je Ort
 - **🌦️ Wetter (optional):** Live-Abruf via Open-Meteo, nur nach Klick + Consent
 - **📷 Fotos zur Notiz:** Bis zu 3 eigene Fotos pro Ort, lokal gespeichert (automatisch verkleinert)

@@ -91,11 +91,11 @@ input[type=text],textarea{width:100%;border-radius:16px;border:1.5px solid var(-
 </div></div>
 
 <div class="details" id="secFilter"><div class="card" style="margin-top:8px">
-<input type="text" id="filterText" placeholder="🔍 Eigener Filter: Bank, Schatten, See, Hund...">
-<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
-<button class="pill" id="nowBtn">✨ JETZT ruhig</button>
+<div class="label">ORTSTYPEN</div>
+<div id="typeFilters" style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"></div>
+<div class="label" style="margin-top:16px">WEITERE OPTIONEN</div>
+<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
 <button class="pill" id="favFilter">❤️ Meine Orte (<span id="favCount">0</span>)</button>
-<button class="pill" id="surpriseBtn">🎲 Überrasch mich</button>
 <button class="pill" id="resetBtn">↺ Filter zurücksetzen</button>
 </div>
 <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
@@ -121,7 +121,9 @@ input[type=text],textarea{width:100%;border-radius:16px;border:1.5px solid var(-
 <div id="mapFsOverlay"></div>
 <script>
 let places=[]; // Keine feste Orte-Liste mehr – ausschließlich Live-Ergebnisse (Overpass API) + selbst gemerkte Orte
-let userLat=null,userLon=null,radius=5,search="",favOnly=false,nowMode=false;
+let userLat=null,userLon=null,radius=5,favOnly=false,activeTypes=[];
+const typeList = [["Aussicht","🌄 Aussichtspunkt"],["Park","🌳 Park"],["Quelle","💧 Quelle"],["Café","☕ Café"],["Eisdiele","🍦 Eisdiele"],["Restaurant","🍽️ Restaurant"],["Strand/Seeufer","🏖️ Strand/Seeufer"],["Picknickplatz","🧺 Picknickplatz"],["Naturschutzgebiet","🌲 Naturschutzgebiet"]];
+activeTypes = typeList.map(([k])=>k);
 let osmResults=[],osmCache={},lastOverpassFetch=0;
 const map=L.map('map',{zoomControl:false}).setView([53.73,10.08],12);
 let mapTiles=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',maxZoom:19}).addTo(map);
@@ -260,10 +262,13 @@ async function fetchOverpass(){
       const isBeach = tags.natural==='beach';
       const isPicnic = tags.tourism==='picnic_site';
       const isReserve = tags.leisure==='nature_reserve';
-      const name = tags.name || (tags.amenity==='cafe' ? 'Café (OSM)' : tags.amenity==='ice_cream' ? 'Eisdiele (OSM)' : isRestaurant ? 'Restaurant (OSM)' : tags.tourism==='viewpoint' ? 'Aussichtspunkt (OSM)' : isBeach ? 'Strand/Seeufer (OSM)' : isPicnic ? 'Picknickplatz (OSM)' : isReserve ? 'Naturschutzgebiet (OSM)' : 'Ruhiger Ort (OSM)');
-      const placeTag = isCafe?(tags.amenity==='cafe'?'Café':'Eisdiele'):isRestaurant?'Restaurant':isBeach?'Strand/Seeufer':isPicnic?'Picknickplatz':isReserve?'Naturschutzgebiet':(tags.tourism==='viewpoint'?'Aussicht':'Grünfläche');
+      const isViewpoint = tags.tourism==='viewpoint';
+      const isSpring = tags.natural==='spring';
+      const isPark = tags.leisure==='park';
+      const name = tags.name || (tags.amenity==='cafe' ? 'Café (OSM)' : tags.amenity==='ice_cream' ? 'Eisdiele (OSM)' : isRestaurant ? 'Restaurant (OSM)' : isViewpoint ? 'Aussichtspunkt (OSM)' : isBeach ? 'Strand/Seeufer (OSM)' : isPicnic ? 'Picknickplatz (OSM)' : isReserve ? 'Naturschutzgebiet (OSM)' : isSpring ? 'Quelle (OSM)' : isPark ? 'Park (OSM)' : 'Ruhiger Ort (OSM)');
+      const placeTag = isCafe?(tags.amenity==='cafe'?'Café':'Eisdiele'):isRestaurant?'Restaurant':isBeach?'Strand/Seeufer':isPicnic?'Picknickplatz':isReserve?'Naturschutzgebiet':isViewpoint?'Aussicht':isSpring?'Quelle':isPark?'Park':'Sonstiges';
       const placeMoods = isCafe?["Mit Kind"]:isRestaurant?["Mit Kind"]:isBeach?["Durchatmen","Mit Kind"]:isPicnic?["Picknick","Mit Kind"]:isReserve?["Durchatmen","Lesen"]:["Durchatmen","Lesen"];
-      const placeWhy = tags.description || (isCafe? 'Aus OpenStreetMap – Café/Eisdiele in der Nähe.' : isRestaurant? 'Aus OpenStreetMap – Restaurant in der Nähe.' : isBeach? 'Aus OpenStreetMap – Strand/Seeufer in der Nähe.' : isPicnic? 'Aus OpenStreetMap – ausgewiesener Picknickplatz.' : isReserve? 'Aus OpenStreetMap – Naturschutzgebiet.' : 'Aus OpenStreetMap – von Community als ruhig/ruhig nutzbar getaggt.');
+      const placeWhy = tags.description || (isCafe? 'Aus OpenStreetMap – Café/Eisdiele in der Nähe.' : isRestaurant? 'Aus OpenStreetMap – Restaurant in der Nähe.' : isBeach? 'Aus OpenStreetMap – Strand/Seeufer in der Nähe.' : isPicnic? 'Aus OpenStreetMap – ausgewiesener Picknickplatz.' : isReserve? 'Aus OpenStreetMap – Naturschutzgebiet.' : isSpring? 'Aus OpenStreetMap – Quelle in der Nähe.' : isPark? 'Aus OpenStreetMap – Parkanlage in der Nähe.' : 'Aus OpenStreetMap – von Community als ruhig/ruhig nutzbar getaggt.');
       return {id:'osm_'+el.id, name, lat, lon, why: placeWhy, tags: [placeTag, 'OSM Live'].filter(Boolean), moods: placeMoods, wheelchair: tags.wheelchair||null, regeln:"OSM Daten – vor Ort prüfen, ODbL", geschichte:"Gefunden via Overpass API, Daten © OpenStreetMap contributors.", anreise:"Standort siehe Markierung auf der Karte oben", best:{morgens:"grün",mittags:"grün",abends:"grün",wochenende:"gelb"}, isOSM:true, osmTags:tags};
     }).filter(Boolean);
     // Duplikate vermeiden: OSM-Treffer verwerfen, die <60m von einem bereits gemerkten Ort liegen
@@ -289,13 +294,10 @@ function getFiltered(){
  .filter(p=>{
   if(favOnly) return favs.includes(p.id);
   if(userLat && p.dist>radius) return false;
-  if(search && !(p.name.toLowerCase().includes(search) || p.tags.join(' ').toLowerCase().includes(search) || p.why.toLowerCase().includes(search))) return false;
+  if(activeTypes.length && !activeTypes.includes(p.tags[0])) return false;
   return true;
  });
- if(nowMode){
-  const h=new Date().getHours(); let slot=h<11?'morgens':h<15?'mittags':h<18?'abends':'abends'; const we=[0,6].includes(new Date().getDay()); if(we) slot='wochenende';
-  f.sort((a,b)=>{const sa=a.best[slot]==='grün'?0:a.best[slot]==='gelb'?1:2; const sb=b.best[slot]==='grün'?0:b.best[slot]==='gelb'?1:2; return sa-sb || a.dist-b.dist});
- } else f.sort((a,b)=>a.dist-b.dist);
+ f.sort((a,b)=>a.dist-b.dist);
  return f;
 }
 function renderList(){
@@ -307,20 +309,15 @@ function renderList(){
   const nichtsGesucht = places.length===0 && osmResults.length===0;
   list.innerHTML = nichtsGesucht
    ? '<div class="card small" style="text-align:center;padding:30px 16px"><div style="font-size:38px;margin-bottom:8px">🔍</div>Noch keine Orte geladen.<br>Tippe oben auf „Live: Orte, Cafés &amp; Eis hier finden", um Ergebnisse aus deiner Umgebung zu laden.</div>'
-   : '<div class="card small" style="text-align:center;padding:30px 16px"><div style="font-size:38px;margin-bottom:8px">🧭</div>Kein Ort im Radius/Filter – vergrößere den Radius, passe die Filter an oder starte die Live-Suche erneut.</div>';
+   : '<div class="card small" style="text-align:center;padding:30px 16px"><div style="font-size:38px;margin-bottom:8px">🧭</div>Kein Ort im Radius/Filter – vergrößere den Radius, wähle mehr Ortstypen aus oder starte die Live-Suche erneut.</div>';
   return;
  }
  filtered.forEach(p=>{
   const isFav=favs.includes(p.id);
-  const nowBadge=(()=>{
-   if(!nowMode) return '';
-   const h=new Date().getHours(); let slot=h<11?'morgens':h<15?'mittags':h<18?'abends':'abends'; const we=[0,6].includes(new Date().getDay()); if(we) slot='wochenende';
-   return p.best[slot]==='grün'?'<span class="badge">GERADE IDEAL</span>':'';
-  })();
   const d=document.createElement('div'); d.className='card'; d.id=p.id;
   d.innerHTML=`
    <div style="display:flex;justify-content:space-between;align-items:start">
-    <div><b>${esc(p.name)}</b> ${nowBadge} <span class="small">${p.dist? p.dist.toFixed(1)+' km':''}</span><br><span class="small">${esc(p.why)}</span></div>
+    <div><b>${esc(p.name)}</b> <span class="small">${p.dist? p.dist.toFixed(1)+' km':''}</span><br><span class="small">${esc(p.why)}</span></div>
     <span class="fav" data-fav="${p.id}" role="button" aria-label="${isFav?'Favorit entfernen':'Als Favorit speichern'}">${isFav?'❤️':'🤍'}</span>
    </div>
    <div style="margin-top:8px">${p.tags.filter(t=>t!=='Bank mit Lehne').map(t=>`<span class="pill" style="font-size:12.5px;padding:6px 11px">${esc(t)}</span>`).join('')}</div>
@@ -408,18 +405,11 @@ async function doSearch(){
 }
 document.getElementById('searchBtn').onclick=doSearch;
 document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault(); doSearch();}});
-document.getElementById('filterText').oninput=e=>{search=e.target.value.toLowerCase(); renderList();};
+const typeDiv=document.getElementById('typeFilters');
+typeList.forEach(([k,l])=>{const b=document.createElement('button'); b.className='pill active'; b.textContent=l; b.onclick=()=>{if(activeTypes.includes(k)) activeTypes=activeTypes.filter(x=>x!==k); else activeTypes.push(k); b.classList.toggle('active'); renderList(); renderMarkers();}; typeDiv.appendChild(b);});
 document.getElementById('favFilter').onclick=e=>{favOnly=!favOnly; e.currentTarget.classList.toggle('active',favOnly); renderList();};
-document.getElementById('nowBtn').onclick=e=>{nowMode=!nowMode; e.currentTarget.classList.toggle('active',nowMode); renderList();};
-document.getElementById('resetBtn').onclick=()=>{search='';favOnly=false;nowMode=false;document.getElementById('filterText').value='';document.getElementById('favFilter').classList.remove('active');document.getElementById('nowBtn').classList.remove('active');renderList();renderMarkers();};
+document.getElementById('resetBtn').onclick=()=>{favOnly=false; activeTypes=typeList.map(([k])=>k); document.getElementById('favFilter').classList.remove('active'); document.querySelectorAll('#typeFilters .pill').forEach(b=>b.classList.add('active')); renderList(); renderMarkers();};
  document.getElementById('overpassBtn').onclick=fetchOverpass;
-
-document.getElementById('surpriseBtn').onclick=()=>{
- const pool=getFiltered(); if(!pool.length){alert('Kein Ort passt aktuell zu deinen Filtern.'); return;}
- const pick=pool[Math.floor(Math.random()*pool.length)];
- location.hash=pick.id;
- setTimeout(()=>{const e=document.getElementById(pick.id); if(e){e.scrollIntoView({behavior:'smooth',block:'center'}); const d=document.getElementById('det-'+pick.id); if(d) d.classList.add('open');}},50);
-};
 
 document.getElementById('exportBtn').onclick=()=>{
  const backup={version:1,exported:new Date().toISOString(),favs,notes,checks,photos,custom:load('ruhige-orte-custom',[])};

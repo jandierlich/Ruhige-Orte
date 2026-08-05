@@ -151,6 +151,17 @@ In Deutschland gilt TMG §5 auch für private GitHub Pages, wenn öffentlich err
 
 Stand: 27.07.2026, letzte Prüfung Nachtrag 13
 
+## Nachtrag 23 (Claude, 04.08.2026) – Filter komplett auf Ortstyp-Buttons umgebaut
+
+Auf Wunsch das Filterkonzept grundlegend geändert:
+- **Entfernt:** Freitext-Filterfeld, „✨ JETZT ruhig" (Sortierung nach Tageszeit), „🎲 Überrasch mich" (Zufallsauswahl) – inklusive aller zugehörigen Variablen (`search`, `nowMode`), Sortierlogik und des „GERADE IDEAL"-Badges in der Liste.
+- **Neu:** Ein Button pro Ortstyp (Aussichtspunkt, Park, Quelle, Café, Eisdiele, Restaurant, Strand/Seeufer, Picknickplatz, Naturschutzgebiet) – alle starten aktiv, Antippen blendet den Typ aus der Liste/Karte aus. Funktioniert nach demselben Prinzip wie die frühere Stimmung/Komfort-Filterung (Nachtrag 19), diesmal aber mit echter, eindeutiger Datengrundlage (jeder Live-Ort hat genau einen der neun Typen als ersten Tag).
+- Dabei aufgefallen und behoben: Park (`leisure=park`) und Quelle (`natural=spring`) fielen bisher beide unter das generische Label „Grünfläche" und waren dadurch nicht unterscheidbar – jetzt sauber als eigene Kategorien getrennt (auch in Name/Beschreibung/Filter).
+- **Layout:** Filter-Bereich zweigeteilt in „ORTSTYPEN" (die neun Kategorie-Buttons) und „WEITERE OPTIONEN" (Meine Orte, Reset, Backup, Drucken, Teilen).
+- **Reset-Button** aktiviert jetzt wieder alle Ortstypen und deaktiviert „Meine Orte" – Standort, Radius und geladene Live-Ergebnisse bleiben unverändert (Prinzip aus Nachtrag 22 beibehalten).
+
+Anschließender vollständiger Funktions- und Rechtscheck (siehe Antwort im Chat): JavaScript-Syntax fehlerfrei, keine toten Referenzen auf entfernte Elemente, keine neuen externen Dienste/Domains eingeführt – rechtlich/lizenztechnisch unverändert zum Stand von Nachtrag 21. Anleitung und README aktualisiert. Cache-Version auf v22 erhöht.
+
 ## Nachtrag 22 (Claude, 04.08.2026) – Overpass-Suche robuster, Reset-Button korrigiert
 
 Jan meldete: Live-Suche oft ohne Erfolg und ohne erkennbare Meldung. Ursachenanalyse: Es gab zwar in jedem Fehlerfall bereits eine Meldung im Code, aber (a) kein Timeout pro Overpass-Server – ein hängender Server ließ die Anfrage ggf. sehr lange unbeantwortet, bevor überhaupt ein Fehler erkannt wurde, (b) die Statusbox konnte aus dem sichtbaren Bereich gescrollt sein und wurde dadurch leicht übersehen, (c) eine Rückgabe mit „0 Treffer" sah optisch kaum anders aus als ein Fehler. Behoben:
