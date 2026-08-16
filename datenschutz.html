@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<title>Datenschutz – Ruhige Orte</title>
+<meta name="theme-color" content="#2C5049">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+:root{--bg1:#F3F0E8;--bg2:#E7DFCE;--card:#ffffffF2;--cardB:#D9D0BB;--primary:#3C6E62;--accent:#2C5049;--gold:#B48A3F;--text:#20302B;--text2:#4B5A54;--muted:#8A9791;--shadow:0 1px 2px rgba(32,48,43,.05),0 10px 28px rgba(32,48,43,.10)}
+html.dark{--bg1:#121B18;--bg2:#0C1412;--card:#1D2C27E6;--cardB:rgba(190,205,197,.16);--primary:#5B9284;--accent:#4C8577;--gold:#C9A458;--text:#EDF1EE;--text2:#B7C4BE;--muted:#7E8D87;--shadow:0 12px 32px rgba(0,0,0,.45),0 3px 10px rgba(0,0,0,.3)}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--text);min-height:100dvh;padding:10px 16px 60px;padding-top:calc(10px + env(safe-area-inset-top))}
+.wrap{max-width:440px;margin:0 auto}
+a.back,a{color:var(--accent);text-decoration:none;font-weight:600}
+a.back{display:inline-block;margin:14px 0;font-size:14px}
+.card{background:var(--card);backdrop-filter:blur(20px);border:1px solid var(--cardB);border-radius:18px;padding:20px;margin:12px 0;box-shadow:var(--shadow);line-height:1.55}
+h1{font-size:23px;margin:0 0 10px;font-weight:700;letter-spacing:-.01em}
+h2{font-size:15px;margin:18px 0 6px;color:var(--text2)}
+.small{font-size:12px;color:var(--muted)}
+p,li{margin:6px 0}
+ul{padding-left:20px}
+code{background:rgba(107,163,208,.15);padding:1px 5px;border-radius:6px;font-size:12px}
+#statusbarCover{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top);background:var(--bg1);z-index:9000;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="statusbarCover"></div>
+<div class="wrap">
+<a class="back" href="index.html">← Zurück zu Ruhige Orte</a>
+<div class="card">
+<h1>Datenschutz</h1>
+
+<h2>1. Keine Cookies, kein Tracking</h2>
+<p>Diese App setzt keine Cookies. Es werden keine Tracking-Tools wie Google Analytics, Matomo oder ähnliche verwendet. Es gibt kein Backend und keinen Server, der Zugriffe loggt (außer GitHub Pages selbst – siehe Punkt 4).</p>
+
+<h2>2. Standort & lokale Speicherung</h2>
+<p>Die Standortfunktion nutzt die Browser-Schnittstelle <code>navigator.geolocation</code>. Der Standort wird ausschließlich lokal im Browser verarbeitet, um die Entfernung zu ruhigen Orten zu berechnen. Er wird niemals an einen Server gesendet oder gespeichert.</p>
+<p>Folgende Daten werden lokal im Browser gespeichert (<code>localStorage</code>):</p>
+<ul>
+<li><code>ruhige-orte-favs</code> – Favoriten</li>
+<li><code>ruhige-orte-notes</code> – persönliche Notizen</li>
+<li><code>ruhige-orte-checks</code> – Ruhe-Checks</li>
+<li><code>ruhige-orte-photos</code> – eigene Fotos zu Orten (nur auf diesem Gerät, verkleinert)</li>
+<li><code>ruhige-orte-custom</code> – übernommene OSM-Orte</li>
+<li><code>ruhige-orte-theme</code> – Hell/Dunkel-Einstellung</li>
+</ul>
+<p>Alle Daten bleiben ausschließlich auf deinem Gerät und lassen sich im Browser unter „Website-Daten“ jederzeit löschen.</p>
+
+<h2>3. Karten & Suche</h2>
+<p><b>Karten:</b> Die App nutzt Leaflet mit den offiziellen Kartenkacheln von OpenStreetMap. Beim Laden der Karte werden Kacheln von <code>tile.openstreetmap.org</code> geladen, dabei wird die IP-Adresse technisch bedingt an die OpenStreetMap Foundation übertragen. Es gelten die <a href="https://operations.osmfoundation.org/policies/tiles/" target="_blank" rel="noopener">Kachel-Nutzungsbedingungen von OpenStreetMap</a> sowie die <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener">Datenschutzerklärung der OSM Foundation</a>.</p>
+<p><b>Bibliothek:</b> Die Kartendarstellung nutzt die JavaScript-Bibliothek Leaflet, ausgeliefert über <code>unpkg.com</code> (CDN). Dabei wird die IP-Adresse technisch bedingt an unpkg.com übertragen.</p>
+<p><b>Ortssuche (optional):</b> Nur wenn du aktiv auf „Suchen“ klickst und den Hinweis bestätigst, wird der eingegebene Ort an Nominatim (<code>nominatim.openstreetmap.org</code>) gesendet. Es gelten die <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank" rel="noopener">Nutzungsbedingungen von Nominatim</a>.</p>
+<p><b>Live-Suche (optional):</b> Nur wenn du aktiv auf „Live: Orte, Cafés & Eis hier finden“ klickst und den Hinweis bestätigst, wird der aktuelle Kartenausschnitt an einen von mehreren öffentlichen Overpass-Servern gesendet (der Reihe nach versucht: <code>overpass-api.de</code>, <code>overpass.kumi.systems</code>, <code>overpass.private.coffee</code> – alle kostenlose OSM-Community-Dienste, falls einer nicht erreichbar ist). Es gelten die <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener">Nutzungsbedingungen der Overpass API</a>.</p>
+<p><b>Wetter (optional):</b> Nur wenn du bei einem Ort aktiv auf „Wetter hier abrufen“ klickst und den Hinweis bestätigst, werden die Koordinaten dieses Ortes an Open-Meteo (<code>api.open-meteo.com</code>) gesendet, um die aktuelle Temperatur, Windgeschwindigkeit und den Niederschlag abzurufen. Open-Meteo ist ein kostenloser Wetterdienst ohne Login und ohne Tracking, nutzbar für nicht-kommerzielle Zwecke. Es gelten die <a href="https://open-meteo.com/en/terms" target="_blank" rel="noopener">Nutzungsbedingungen von Open-Meteo</a>.</p>
+
+<h2>4. GitHub Pages</h2>
+<p>Diese Seite wird über GitHub Pages gehostet. GitHub kann technisch bedingt IP-Adressen und Zugriffszeiten protokollieren. Siehe die <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener">GitHub-Datenschutzerklärung</a>.</p>
+
+<h2>5. Deine Rechte</h2>
+<p>Du hast das Recht auf Auskunft und Löschung deiner lokal gespeicherten Daten (einfach im Browser löschen) sowie das Recht zur Beschwerde bei einer Datenschutz-Aufsichtsbehörde.</p>
+
+<p class="small">Stand: August 2026</p>
+</div>
+</div>
+</body>
+</html>
